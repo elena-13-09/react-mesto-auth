@@ -1,0 +1,22 @@
+@import url('./__form/auth__form.css');
+@import url('./__title/auth__title.css');
+@import url('./__form/auth__form.css');
+@import url('./__input/auth__input.css');
+@import url('./__signin/auth__signin.css');
+@import url('./__signin/auth__signin-paragraf.css');
+@import url('./__field/auth__field.css');
+@import url('./__login-link/auth__login-link.css');
+@import url('./__submit/auth__submit.css');
+
+.auth {
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: column;
+  width: 358px;
+}
+
+@media screen and (max-width: 500px) {
+  .auth {
+    width: 260px;
+  }
+}

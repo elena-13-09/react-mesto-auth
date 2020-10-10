@@ -1,0 +1,29 @@
+@import url('./__logo/header__logo.css');
+@import url('./__button/header__button.css');
+@import url('./__email/header__email.css');
+@import url('./__link/header__link.css');
+@import url('./__nav/header__nav.css');
+@import url('./__hamburger-menu/header__hamburger-menu.css');
+@import url('./__hamburger-line/header__hamburger-line.css');
+@import url('./__nav/_mobile/header__nav_mobile.css');
+
+.header {
+  margin: 0 auto;
+  width: 883px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 970px){
+  .header {
+    width: calc(100% - 140px);
+  }
+}
+
+@media screen and (max-width: 500px){
+  .header {
+    width: 100%;
+  }
+}

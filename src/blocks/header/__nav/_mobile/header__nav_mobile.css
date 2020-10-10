@@ -1,0 +1,9 @@
+@media screen and (max-width: 500px) {
+  .header__nav_mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+  }
+}

@@ -1,0 +1,15 @@
+.form__container_tooltip {
+  width: 430px;
+}
+
+@media screen and (max-width: 550px) {
+  .form__container_tooltip {
+    width: 280px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .form__container_tooltip {
+    width: 200px;
+  }
+}

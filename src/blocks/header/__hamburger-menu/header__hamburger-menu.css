@@ -1,0 +1,13 @@
+.header__hamburger-menu {
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    background-color: transparent;
+    margin-right: 30px;
+}
+
+
