@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from '../utils/api';
+import * as api from '../utils/api';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -35,22 +35,22 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   // для смены стиля модального окна
   const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = React.useState(false);
-
+  const [token, setToken] = React.useState('');
   const history = useHistory();
 
   React.useEffect(() => {
     Promise.all([
-      api.getUserInfo(),
-      api.getInitialCards()
+      api.getUserInfo(token),
+      api.getInitialCards(token)
     ])
       .then(([user, initialCards]) => {
         setCurrentUser(user);
-        setCards(initialCards);
+        setCards(initialCards.reverse());
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [token]);
 
   // Открытие попапов
   function handleEditProfileClick() {
@@ -97,12 +97,13 @@ function App() {
   function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
+      setToken(jwt);
       // проверяем токен пользователя
       auth.getContent(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setLoggedInEmail(res.data.email);
+            setLoggedInEmail(res.email);
             history.push('/');
           }
         })
@@ -141,6 +142,8 @@ function App() {
       .then((res) => {
         if (res && res.token) {
           localStorage.setItem('jwt', res.token);
+          setToken(res.token);
+          auth.getContent(res.token)
           setLoggedIn(true);
           setLoggedInEmail(email);
           history.push('/');
@@ -164,9 +167,9 @@ function App() {
   // Лайки
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked, token)
       .then((newCard) => {
         // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
         const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -178,7 +181,7 @@ function App() {
   // Удаление карточки
   function handleCardDeleteSubmit() {
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.deleteCard(cardDelete._id)
+    api.deleteCard(cardDelete._id, token)
       .then(() => {
         // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
         const newCards = cards.filter((i) => i._id !== cardDelete._id);
@@ -194,7 +197,7 @@ function App() {
   // Редактирование профиля
   function handleUpdateUser(user) {
     setIsLoading(true);
-    api.editUserInfo(user)
+    api.editUserInfo(user, token)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -210,7 +213,7 @@ function App() {
   // Изменение аватара
   function handleUpdateAvatar(user) {
     setIsLoading(true);
-    api.editUserAvatar(user)
+    api.editUserAvatar(user, token)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -226,7 +229,7 @@ function App() {
   // Добавление карточки
   function handleAddPlaceSubmit(card) {
     setIsLoading(true);
-    api.addNewCard(card)
+    api.addNewCard(card, token)
       .then((res) => {
         setCards([...cards, res]);
         closeAllPopups();

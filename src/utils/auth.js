@@ -1,4 +1,12 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+import { BASE_URL } from './utils';
+
+//получить ответ
+const response = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error ${res.status}`);
+}
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -9,13 +17,7 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email, password })
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`error${res.status}`);
-    })
-
+    .then(response);
 }
 
 export const authorize = (email, password) => {
@@ -27,12 +29,7 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({ email, password })
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`error${res.status}`);
-    })
+    .then(response);
 }
 
 export const getContent = (token) => {
@@ -44,11 +41,6 @@ export const getContent = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`error${res.status}`);
-    })
+    .then(response);
 }
 

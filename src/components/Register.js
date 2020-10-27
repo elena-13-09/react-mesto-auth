@@ -36,8 +36,8 @@ function Register(props) {
             name="password"
             id="password"
             placeholder="Пароль"
-            minLength="2"
-            maxLength="8"
+            minLength="6"
+            maxLength="16"
             required
           />
         </fieldset>
