@@ -4,7 +4,7 @@
   "private": true,
   "description": "Учебный проект, выполненный на курсе Вэб-разработчик от Яндекс.Практикум",
   "author": "Elena Goreva",
-  "homepage": "https://goreva.students.nomoreparties.xyz",
+  "homepage": "https://project.goreva.nomoredomains.club/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "scp -r ./build/* praktikum@130.193.51.189:/home/praktikum/news-frontend" 
+    "deploy": "scp -r ./build/* root@149.154.68.212:/home/react-mesto-auth" 
   },
   "eslintConfig": {
     "extends": "react-app"
